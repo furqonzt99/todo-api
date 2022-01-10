@@ -29,3 +29,18 @@ func (u Users) Register(c echo.Context) error {
 		"user":     res,
 	})
 }
+
+func (u Users) Login(c echo.Context) error {
+	var login models.User
+	c.Bind(&login)
+
+	res, err := u.repository.Login(login.Email, login.Password)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "id or your password salah")
+	}
+
+	return c.JSON(200, map[string]interface{}{
+		"messeges": "login succes",
+		"token":    res.Token,
+	})
+}
