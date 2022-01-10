@@ -8,6 +8,8 @@ import (
 type Repository interface {
 	Register(u models.User) (models.User, error)
 	Login(name, pwd string) (models.User, error)
+
+	GetAll() ([]models.User, error)
 }
 
 type repository struct {
@@ -32,4 +34,12 @@ func (u *repository) Login(name, pwd string) (models.User, error) {
 		return login, err
 	}
 	return login, nil
+}
+func (u *repository) GetAll() ([]models.User, error) {
+	var users []models.User
+	err := u.db.Find(&users).Error
+	if err != nil {
+		return nil, err
+	}
+	return users, nil
 }

@@ -44,3 +44,16 @@ func (u Users) Login(c echo.Context) error {
 		"token":    res.Token,
 	})
 }
+
+func (u Users) GetAll(c echo.Context) error {
+
+	users, err := u.repository.GetAll()
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return c.JSON(200, map[string]interface{}{
+		"messages": "success find all users",
+		"users":    users,
+	})
+
+}

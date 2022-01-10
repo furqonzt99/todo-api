@@ -9,5 +9,6 @@ func Users(e *echo.Echo, cc *controllers.Users) {
 
 	e.POST("/register", cc.Register)
 	e.POST("/login", cc.Login)
+	e.GET("/getAll", cc.GetAll)
 
 }
