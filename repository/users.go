@@ -10,6 +10,7 @@ type Repository interface {
 	Login(name, pwd string) (models.User, error)
 
 	GetAll() ([]models.User, error)
+	Delete(id int) error
 }
 
 type repository struct {
@@ -42,4 +43,13 @@ func (u *repository) GetAll() ([]models.User, error) {
 		return nil, err
 	}
 	return users, nil
+}
+
+func (u *repository) Delete(id int) error {
+	var user models.User
+	err := u.db.Delete(&user, id).Error
+	if err != nil {
+		return err
+	}
+	return err
 }

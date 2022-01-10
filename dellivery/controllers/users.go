@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/furqonzt99/todo-api/models"
 	"github.com/furqonzt99/todo-api/repository"
@@ -56,4 +58,19 @@ func (u Users) GetAll(c echo.Context) error {
 		"users":    users,
 	})
 
+}
+
+func (u Users) Delete(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	err2 := u.repository.Delete(id)
+	if err2 != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return c.JSON(200, map[string]interface{}{
+		"messages": fmt.Sprintf("id %v was deleted!", id),
+	})
 }
