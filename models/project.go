@@ -7,4 +7,5 @@ type Project struct {
 	Name string `json:"name" form:"name"`
 	Description string `json:"description" form:"description"`
 	UserID uint
+	Todo []Todo
 }
