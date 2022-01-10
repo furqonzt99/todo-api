@@ -10,6 +10,7 @@ type Repository interface {
 	Login(name, pwd string) (models.User, error)
 
 	GetAll() ([]models.User, error)
+	GetUser(id int) (models.User, error)
 	Delete(id int) error
 }
 
@@ -43,6 +44,15 @@ func (u *repository) GetAll() ([]models.User, error) {
 		return nil, err
 	}
 	return users, nil
+}
+
+func (u *repository) GetUser(id int) (models.User, error) {
+	var user models.User
+	err := u.db.First(&user, id).Error
+	if err != nil {
+		return user, err
+	}
+	return user, nil
 }
 
 func (u *repository) Delete(id int) error {

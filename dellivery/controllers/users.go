@@ -60,6 +60,23 @@ func (u Users) GetAll(c echo.Context) error {
 
 }
 
+func (u Users) GetUser(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	idUser, err := u.repository.GetUser(id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("id number %v not found!", id))
+	}
+
+	return c.JSON(200, map[string]interface{}{
+		"messages": fmt.Sprintf("id %v has been found!", id),
+		"user":     idUser,
+	})
+}
+
 func (u Users) Delete(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -71,6 +88,6 @@ func (u Users) Delete(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(200, map[string]interface{}{
-		"messages": fmt.Sprintf("id %v was deleted!", id),
+		"messages": fmt.Sprintf("id %v has been deleted!", id),
 	})
 }

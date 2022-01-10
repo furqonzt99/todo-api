@@ -11,5 +11,6 @@ func Users(e *echo.Echo, cc *controllers.Users) {
 	e.POST("/login", cc.Login)
 
 	e.GET("/getAll", cc.GetAll)
+	e.GET("/getuser/:id", cc.GetUser)
 	e.DELETE("/delete/:id", cc.Delete)
 }
