@@ -12,6 +12,7 @@ type Repository interface {
 	GetAll() ([]models.User, error)
 	GetUser(id int) (models.User, error)
 	Delete(id int) error
+	Update(user models.User) (models.User, error)
 }
 
 type repository struct {
@@ -62,4 +63,13 @@ func (u *repository) Delete(id int) error {
 		return err
 	}
 	return err
+}
+
+func (u *repository) Update(user models.User) (models.User, error) {
+	err := u.db.Save(&user).Error
+	if err != nil {
+		return user, err
+	}
+
+	return user, err
 }

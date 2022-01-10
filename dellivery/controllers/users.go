@@ -91,3 +91,30 @@ func (u Users) Delete(c echo.Context) error {
 		"messages": fmt.Sprintf("id %v has been deleted!", id),
 	})
 }
+
+func (u Users) Update(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	user, err := u.repository.GetUser(id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("id number %v not found!", id))
+	}
+
+	var tmpUser models.User
+	c.Bind((&tmpUser))
+	user.Name = tmpUser.Name
+	user.Email = tmpUser.Email
+	user.Password = tmpUser.Password
+
+	userRes, err := u.repository.Update(user)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"messages": fmt.Sprintf("id %v was updated!", id),
+		"user":     userRes,
+	})
+}

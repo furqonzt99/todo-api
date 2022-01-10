@@ -13,4 +13,5 @@ func Users(e *echo.Echo, cc *controllers.Users) {
 	e.GET("/getAll", cc.GetAll)
 	e.GET("/getuser/:id", cc.GetUser)
 	e.DELETE("/delete/:id", cc.Delete)
+	e.PUT("/update/:id", cc.Update)
 }
