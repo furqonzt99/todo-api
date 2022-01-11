@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/furqonzt99/todo-api/dellivery/middlewares"
 	"github.com/furqonzt99/todo-api/models"
 	"github.com/furqonzt99/todo-api/repository"
 	"github.com/labstack/echo/v4"
@@ -21,6 +22,11 @@ func NewUsers(repository repository.Repository) *Users {
 func (u Users) Register(c echo.Context) error {
 	var user models.User
 	c.Bind(&user)
+
+	// var pwd models.User
+	hash, _ := middlewares.Hashpwd(user.Password)
+
+	user.Password = hash
 
 	res, err := u.repository.Register(user)
 	if err != nil {
