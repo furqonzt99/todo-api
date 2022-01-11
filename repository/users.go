@@ -13,6 +13,7 @@ type Repository interface {
 	GetUser(id int) (models.User, error)
 	Delete(id int) error
 	Update(user models.User) (models.User, error)
+	GetLoginData(email string) (models.User, error)
 }
 
 type repository struct {
@@ -72,4 +73,13 @@ func (u *repository) Update(user models.User) (models.User, error) {
 	}
 
 	return user, err
+}
+
+func (u *repository) GetLoginData(email string) (models.User, error) {
+	var user models.User
+	err := u.db.First(&user, "email = ?", email).Error
+	if err != nil {
+		return user, err
+	}
+	return user, nil
 }

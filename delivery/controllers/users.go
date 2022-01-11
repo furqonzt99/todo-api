@@ -5,25 +5,24 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/furqonzt99/todo-api/dellivery/middlewares"
+	"github.com/furqonzt99/todo-api/delivery/middlewares"
 	"github.com/furqonzt99/todo-api/models"
 	"github.com/furqonzt99/todo-api/repository"
 	"github.com/labstack/echo/v4"
 )
 
-type Users struct {
+type User struct {
 	repository repository.Repository
 }
 
-func NewUsers(repository repository.Repository) *Users {
-	return &Users{repository: repository}
+func NewUsers(repository repository.Repository) *User {
+	return &User{repository: repository}
 }
 
-func (u Users) Register(c echo.Context) error {
+func (u User) Register(c echo.Context) error {
 	var user models.User
 	c.Bind(&user)
 
-	// var pwd models.User
 	hash, _ := middlewares.Hashpwd(user.Password)
 
 	user.Password = hash
@@ -38,26 +37,35 @@ func (u Users) Register(c echo.Context) error {
 	})
 }
 
-func (u Users) Login(c echo.Context) error {
+func (u User) Login(c echo.Context) error {
 	var login models.User
 	c.Bind(&login)
-	hash, err := middlewares.Hashpwd(login.Password)
+
+	user, err := u.repository.GetLoginData(login.Email)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("email %v not found!", login.Email))
+	}
+
+	hash, err := middlewares.Checkpwd(user.Password, login.Password)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	res, err := u.repository.Login(login.Email, hash)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, "id or your password salah!")
+	var token string
+	if hash {
+		token, err = middlewares.CreateToken(int(user.ID))
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err.Error())
+		}
 	}
 
 	return c.JSON(200, map[string]interface{}{
 		"messeges": "login succes",
-		"token":    res.Token,
+		"token":    token,
 	})
 }
 
-func (u Users) GetAll(c echo.Context) error {
+func (u User) GetAll(c echo.Context) error {
 
 	users, err := u.repository.GetAll()
 	if err != nil {
@@ -70,7 +78,7 @@ func (u Users) GetAll(c echo.Context) error {
 
 }
 
-func (u Users) GetUser(c echo.Context) error {
+func (u User) GetUser(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
@@ -87,7 +95,7 @@ func (u Users) GetUser(c echo.Context) error {
 	})
 }
 
-func (u Users) Delete(c echo.Context) error {
+func (u User) Delete(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
@@ -102,7 +110,7 @@ func (u Users) Delete(c echo.Context) error {
 	})
 }
 
-func (u Users) Update(c echo.Context) error {
+func (u User) Update(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
