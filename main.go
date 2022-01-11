@@ -16,12 +16,16 @@ func main()  {
 	
 	utils.InitialMigrate(db)
 
+  repoUser := repository.NewUser(db)
+  ctrlUser := controllers.NewUsers(repoUser)
+  
 	todoRepo := todoRepo.NewTodoRepo(db)
 	todoContoller := todoContoller.NewTodoController(todoRepo)
 
 	e := echo.New()
 
 	routes.RegisterTodoPath(e, *todoContoller)
+  routers.User(e, ctrlUser)
 
 	e.Logger.Fatal(e.Start(":" + config.Port))
 }
