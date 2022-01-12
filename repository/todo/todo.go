@@ -14,27 +14,27 @@ func NewTodoRepo(db *gorm.DB) *TodoRepository {
 }
 
 type Todo interface {
-	GetAll() ([]models.Todo, error)
-	Get(todoId int) (models.Todo, error)
+	GetAll(userId int) ([]models.Todo, error)
+	Get(userId int, todoId int) (models.Todo, error)
 	Insert(models.Todo) (models.Todo, error)
-	Edit(todoId int, todo models.Todo) (models.Todo, error)
-	Delete(todoId int) (models.Todo, error)
+	Edit(userId int, todoId int, todo models.Todo) (models.Todo, error)
+	Delete(userId int, todoId int) (models.Todo, error)
 }
 
-func (tr *TodoRepository) GetAll() ([]models.Todo, error) {
+func (tr *TodoRepository) GetAll(userId int) ([]models.Todo, error) {
 	var todos []models.Todo
 
-	if err := tr.db.Find(&todos).Error; err != nil {
+	if err := tr.db.Where("user_id = ?", userId).Find(&todos).Error; err != nil {
 		return nil, err
 	}
 
 	return todos, nil
 }
 
-func (tr *TodoRepository) Get(todoId int) (models.Todo, error) {
+func (tr *TodoRepository) Get(userId int, todoId int) (models.Todo, error) {
 	var todo models.Todo
 
-	if err := tr.db.First(&todo, todoId).Error; err != nil {
+	if err := tr.db.Where("user_id = ?", userId).First(&todo, todoId, "user_id = ?", userId).Error; err != nil {
 		return todo, err
 	}
 
@@ -50,9 +50,9 @@ func (tr *TodoRepository) Insert(todo models.Todo) (models.Todo, error) {
 	return todo, nil
 }
 
-func (tr *TodoRepository) Edit(todoId int, todo models.Todo) (models.Todo, error) {
+func (tr *TodoRepository) Edit(userId int, todoId int, todo models.Todo) (models.Todo, error) {
 	var t models.Todo
-	tr.db.First(&t, todoId)
+	tr.db.Where("user_id = ?", userId).First(&t, todoId)
 
 	if err := tr.db.Model(&t).Updates(todo).Error; err != nil {
 		return t, err
@@ -61,10 +61,10 @@ func (tr *TodoRepository) Edit(todoId int, todo models.Todo) (models.Todo, error
 	return t, nil
 }
 
-func (tr *TodoRepository) Delete(todoId int) (models.Todo, error) {
+func (tr *TodoRepository) Delete(userId int, todoId int) (models.Todo, error) {
 	var todo models.Todo
 
-	if err := tr.db.Delete(&todo, todoId).Error; err != nil {
+	if err := tr.db.Where("user_id = ?", userId).Delete(&todo, todoId).Error; err != nil {
 		return todo, err
 	}
 

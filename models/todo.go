@@ -12,6 +12,6 @@ type Todo struct {
 	TodoStart time.Time `json:"todo_start" form:"todo_start"`
 	TodoEnd time.Time `json:"todo_end" form:"todo_end"`
 	Status string `json:"status" form:"status"`
-	UserID uint
-	ProjectID uint `json:"project_id" form:"project_id"`
+	UserID uint `json:"user_id"`
+	ProjectID uint `json:"project_id" form:"project_id" gorm:"default:null"`
 }
