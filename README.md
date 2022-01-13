@@ -38,7 +38,7 @@ http://localhost:8080/todos
 `POST`    fitur ini digunakan untuk menambahkan Todo.
 
 ```
-http://localhost:8080/todo/[:id]
+http://localhost:8080/todos/:id
 ```
 `GET`     digunakan untuk menampilkan data pada Todo.
 
@@ -47,12 +47,12 @@ http://localhost:8080/todo/[:id]
 `DELETE`  digunakan untuk menghapus Todo.
 
 ```
-http://localhost:8080/:id/complete
+http://localhost:8080/todos/:id/complete
 ```
 `POST`     endpoint yg digunakan untuk set status Todo sudah terselesaikan.
 
 ```
-http://localhost:8080/[:id]/reopen
+http://localhost:8080/todos/:id/reopen
 ```
 `POST`     endpoint yg digunakan untuk set status 'Reopen' Todo yang sudah terselesaikan.
 
@@ -65,7 +65,7 @@ http://localhost:8080/projects
 `POST`  fitur ini digunakan untuk menambahkan project.
 
 ```
-http://localhost:8080/projects/[:id]
+http://localhost:8080/projects/:id
 ```
 `GET`     digunakan untuk menampilkan data project.
 
