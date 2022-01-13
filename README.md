@@ -9,7 +9,6 @@ http://localhost:8080/register
 ```
 `POST` Pada method ini kita bisa mendaftarkan akun untuk dapat mengakses fitur ToDo dan fitur Project.
 
-
 ```
 http://localhost:8080/login
 ```
@@ -56,3 +55,21 @@ http://localhost:8080/:id/complete
 http://localhost:8080/:id/reopen
 ```
 `POST`     endpoint yg digunakan untuk set status 'Reopen' Todo yang sudah terselesaikan.
+
+# endpoint pada fitur project :
+```
+http://localhost:8080/projects
+```
+`GET`   fitur ini digunakan unutuk mengumpulkan semua project yang telah dibuat.
+
+`POST`  fitur ini digunakan untuk menambahkan project.
+
+```
+http://localhost:8080/projects/[:id]
+```
+`GET`     digunakan untuk menampilkan data project dengan [[Lid]].
+
+`PUT`     digukanan untuk mengedit data project berdasarkan
+
+`DELETE`  digunakan untuk menghapus project(masukan id project pada bagian [[id]]).
+
