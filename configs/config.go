@@ -9,12 +9,12 @@ import (
 )
 
 type AppConfig struct {
-	Port string `yaml:"port"`
+	Port     string `yaml:"port"`
 	Database struct {
-		Driver string `yaml:"driver"`
-		Name string `yaml:"name"`
-		Host string `yaml:"host"`
-		Port string `yaml:"port"`
+		Driver   string `yaml:"driver"`
+		Name     string `yaml:"name"`
+		Host     string `yaml:"host"`
+		Port     string `yaml:"port"`
 		Username string `yaml:"username"`
 		Password string `yaml:"password"`
 	}
@@ -36,13 +36,13 @@ func GetConfig() *AppConfig {
 
 func initConfig() *AppConfig {
 	var testConfig AppConfig
-	testConfig.Port = "1323"
+	testConfig.Port = "8080"
 	testConfig.Database.Driver = "mysql"
 	testConfig.Database.Name = "todo_test_db"
 	testConfig.Database.Host = "localhost"
 	testConfig.Database.Port = "3306"
 	testConfig.Database.Username = "root"
-	testConfig.Database.Password = ""
+	testConfig.Database.Password = "root"
 
 	viper.SetConfigFile("yaml")
 	viper.SetConfigName("config")
