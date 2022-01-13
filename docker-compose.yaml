@@ -3,4 +3,4 @@ services:
     build: .
     restart: always
     ports:
-      - 8080:1324
+      - 7000:1324
