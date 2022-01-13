@@ -1,4 +1,4 @@
-port: '8080'
+port: '1324'
 database:
   driver: 'mysql'
   name: 'todo_db'

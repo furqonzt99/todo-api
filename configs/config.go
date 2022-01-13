@@ -36,7 +36,7 @@ func GetConfig() *AppConfig {
 
 func initConfig() *AppConfig {
 	var testConfig AppConfig
-	testConfig.Port = "8080"
+	testConfig.Port = "1324"
 	testConfig.Database.Driver = "mysql"
 	testConfig.Database.Name = "todo_test_db"
 	testConfig.Database.Host = "localhost"

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/furqonzt99/todo-api/delivery/common"
 	"github.com/furqonzt99/todo-api/delivery/middlewares"
 	"github.com/furqonzt99/todo-api/models"
 	repository "github.com/furqonzt99/todo-api/repository/project"
@@ -24,17 +25,17 @@ func (tc ProjectContoller) GetAll(c echo.Context) error {
 	projects, err := tc.Repo.GetAll(userId)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, projects)
+	return c.JSON(http.StatusOK, common.SuccessResponse(projects))
 }
 
 func (tc ProjectContoller) Get(c echo.Context) error {
 	projectId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
 	}
 
 	userId := middlewares.ExtractTokenUserId(c)
@@ -42,10 +43,10 @@ func (tc ProjectContoller) Get(c echo.Context) error {
 	project, err := tc.Repo.Get(userId, projectId)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, project)
+	return c.JSON(http.StatusOK, common.SuccessResponse(project))
 }
 
 func (tc ProjectContoller) Insert(c echo.Context) error {
@@ -59,17 +60,17 @@ func (tc ProjectContoller) Insert(c echo.Context) error {
 	project, err := tc.Repo.Insert(projectData)
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, project)
+	return c.JSON(http.StatusOK, common.SuccessResponse(project))
 }
 
 func (tc ProjectContoller) Edit(c echo.Context) error {
 	projectId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
 	}
 
 	projectData := models.Project{}
@@ -82,17 +83,17 @@ func (tc ProjectContoller) Edit(c echo.Context) error {
 	project, err := tc.Repo.Edit(userId, projectId, projectData)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, project)
+	return c.JSON(http.StatusOK, common.SuccessResponse(project))
 }
 
 func (tc ProjectContoller) Delete(c echo.Context) error {
 	projectId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
 	}
 
 	userId := middlewares.ExtractTokenUserId(c)
@@ -100,8 +101,8 @@ func (tc ProjectContoller) Delete(c echo.Context) error {
 	project, err := tc.Repo.Delete(userId, projectId)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, project)
+	return c.JSON(http.StatusOK, common.SuccessResponse(project))
 }

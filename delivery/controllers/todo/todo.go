@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/furqonzt99/todo-api/delivery/common"
 	"github.com/furqonzt99/todo-api/delivery/middlewares"
 	"github.com/furqonzt99/todo-api/models"
 	repository "github.com/furqonzt99/todo-api/repository/todo"
@@ -25,17 +26,17 @@ func (tc TodoContoller) GetAll(c echo.Context) error {
 	todos, err := tc.Repo.GetAll(userId)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, todos)
+	return c.JSON(http.StatusOK, common.SuccessResponse(todos))
 }
 
 func (tc TodoContoller) Get(c echo.Context) error {
 	todoId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
 	}
 
 	userId := middlewares.ExtractTokenUserId(c)
@@ -43,10 +44,10 @@ func (tc TodoContoller) Get(c echo.Context) error {
 	todo, err := tc.Repo.Get(userId, todoId)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, todo)
+	return c.JSON(http.StatusOK, common.SuccessResponse(todo))
 }
 
 func (tc TodoContoller) Insert(c echo.Context) error {
@@ -72,17 +73,17 @@ func (tc TodoContoller) Insert(c echo.Context) error {
 	todo, err := tc.Repo.Insert(todoData)
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, todo)
+	return c.JSON(http.StatusOK, common.SuccessResponse(todo))
 }
 
 func (tc TodoContoller) Edit(c echo.Context) error {
 	todoId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
 	}
 
 	todoData := models.Todo{}
@@ -107,17 +108,17 @@ func (tc TodoContoller) Edit(c echo.Context) error {
 	todo, err := tc.Repo.Edit(userId, todoId, todoData)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, todo)
+	return c.JSON(http.StatusOK, common.SuccessResponse(todo))
 }
 
 func (tc TodoContoller) Delete(c echo.Context) error {
 	todoId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
 	}
 
 	userId := middlewares.ExtractTokenUserId(c)
@@ -125,17 +126,17 @@ func (tc TodoContoller) Delete(c echo.Context) error {
 	todo, err := tc.Repo.Delete(userId, todoId)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, todo)
+	return c.JSON(http.StatusOK, common.SuccessResponse(todo))
 }
 
 func (tc TodoContoller) SetComplete(c echo.Context) error {
 	todoId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
 	todoData := models.Todo{}
@@ -149,17 +150,17 @@ func (tc TodoContoller) SetComplete(c echo.Context) error {
 	todo, err := tc.Repo.Edit(userId, todoId, todoData)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, todo)
+	return c.JSON(http.StatusOK, common.SuccessResponse(todo))
 }
 
 func (tc TodoContoller) Reopen(c echo.Context) error {
 	todoId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
 	}
 
 	todoData := models.Todo{}
@@ -173,9 +174,9 @@ func (tc TodoContoller) Reopen(c echo.Context) error {
 	todo, err := tc.Repo.Edit(userId, todoId, todoData)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, err.Error())
+		return c.JSON(http.StatusNotFound, common.ErrorResponse(http.StatusNotFound, err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, todo)
+	return c.JSON(http.StatusOK, common.SuccessResponse(todo))
 }
 
