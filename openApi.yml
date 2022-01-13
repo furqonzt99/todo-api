@@ -16,6 +16,7 @@ tags:
     - name: project
       description: API untuk mengakses data project
 paths:
+
   /register:
     post:
       tags:
@@ -30,6 +31,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 name:
                   type: string
                   example: Asta
@@ -43,6 +47,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 400
                 message:
                   type: string
                   example: Email sudah terdaftar, coba dengan email yang berbeda.
@@ -60,6 +67,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 message::
                   type: string
                   example: suksen login
@@ -73,6 +83,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 400
                 message:
                   type: string
                   example: password atau email salah.
@@ -89,6 +102,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 name::
                   type: string
                   example: asta
@@ -110,6 +126,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 message::
                   type: string
                   example: berhasil mengahapus data
@@ -125,6 +144,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 message::
                   type: string
                   example: berhasil memperbarui data            
@@ -139,13 +161,34 @@ paths:
             application/json:
              schema:
               type: object
-              properties:
-                name: 
-                  type: string
-                  example: mengerjakan tugas
-                message::
-                  type: string
-                  example: Found ToDo
+              $ref: '#/components/schemas/gettodos'
+              
+              # properties:
+              #   data:
+              #     type: array
+              #     items: 
+              #       type: object
+              #       properties:
+              #         name: 
+              #           type: string
+              #           # example: mengerjakan tugas
+              #         message::
+              #           type: string
+              # example:
+              #   data:
+              #     - name: yogaw
+              #       message: haloo
+              #     - name: yogaw
+              #       message: haloo
+              #   messeges:
+              
+              # properties:
+              #   name: 
+              #     type: string
+              #     example: mengerjakan tugas
+              #   message::
+              #     type: string
+              #     example: Found ToDo
     post:
       tags:
         - todo
@@ -157,6 +200,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 message::
                   type: string
                   example: berhasil menambahkan todo.
@@ -174,6 +220,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 name::
                   type: string
                   example: olahraga
@@ -187,6 +236,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 400
                 message:
                   type: string
                   example: ToDo tidak ditemkuan.
@@ -202,6 +254,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 name::
                   type: string
                   example: berenang
@@ -219,6 +274,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 400
                 message::
                   type: string
                   example: berhasil mengahapus Todo.
@@ -237,6 +295,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 message::
                   type: string
                   example: ToDo complete.
@@ -253,6 +314,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 message::
                   type: string
                   example: ToDo reopen.
@@ -267,13 +331,14 @@ paths:
             application/json:
              schema:
               type: object
-              properties:
-                name:
-                  type: string
-                  example: Project satu
-                message::
-                  type: string
-                  example: menemukan semua project.
+              $ref: '#/components/schemas/getprojects'
+              # properties:
+              #   name:
+              #     type: string
+              #     example: Project satu
+              #   message::
+              #     type: string
+              #     example: menemukan semua project.
     post:
       tags:
         - project
@@ -285,6 +350,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 name::
                   type: string
                   example: project dua
@@ -303,6 +371,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 message::
                   type: string
                   example: berhasil menemukan id project.
@@ -313,6 +384,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 400
                 message:
                   type: string
                   example: project tidak ditemkuan.
@@ -328,6 +402,9 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 message::
                   type: string
                   example: berhasil memperbarui project.
@@ -343,6 +420,60 @@ paths:
              schema:
               type: object
               properties:
+                code: 
+                  type: integer
+                  example: 200
                 message::
                   type: string
                   example: berhasil mengahapus project.
+
+
+components:
+  schemas:
+    gettodos:
+      type: object
+      properties:
+        data:
+          type: array
+          items: 
+            type: object
+            properties:
+              name: 
+                type: string
+              message:
+                type: string
+      example:
+        data:
+          - code: 200 
+            message: success
+            data: Belajar
+          - code: 200
+            message: success
+            data: berenang
+        messeges: "semua todo ditemukan"
+
+  
+    getprojects:
+      type: object
+      properties:
+        data:
+          type: array
+          items: 
+            type: object
+            properties:
+              name: 
+                type: string
+              message:
+                type: string
+      example:
+        data:
+          - code: 200 
+            message: success
+            data: project dua
+          - code: 200
+            message: success
+            data: project tiga
+        messeges: "semua project ditemukan"
+
+  
+      
