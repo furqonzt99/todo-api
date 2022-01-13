@@ -8,9 +8,9 @@ Pada aplikasi ini kita dapat memasukan satu atau semua project pada sebuh ToDo l
 http://localhost:8080/register
 ```
 `POST` Pada method ini kita bisa mendaftarkan akun untuk dapat mengakses fitur ToDo dan fitur Project.
-
+------------------------------------------------------------------------------------------------------
 ```
-**http://localhost:8080/login**
+http://localhost:8080/login
 ```
 `POST` Pada method ini kita melakukan login agar dapat melakukan autentikasi pada user yang sudah kita daftarkan dan dapat mengakses semua fitur
 
