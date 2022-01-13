@@ -132,7 +132,7 @@ paths:
         - todo
       responses:
         '200':
-          description: status OK.
+          description: mendapatkan semua todo yang ada.
           content:
             application/json:
              schema:
@@ -144,6 +144,20 @@ paths:
                 message::
                   type: string
                   example: Found ToDo
+    post:
+      tags:
+        - todo
+      responses:
+        '200':
+          description: todo berhasil ditambahkan.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                message::
+                  type: string
+                  example: berhasil menambahkan todo.
         
               
   /todos/:id:
@@ -152,7 +166,7 @@ paths:
         - todo
       responses:
         '200':
-          description: status OK.
+          description: mendapatkan todo berdasarkan todo id.
           content:
             application/json:
              schema:
@@ -165,7 +179,7 @@ paths:
                   type: string
                   example: ToDo ditemukan.   
         '400':
-          description: bad request.
+          description: id todo yang dicari tidak ditemukan.
           content:
             application/json:
              schema:
@@ -175,13 +189,12 @@ paths:
                   type: string
                   example: ToDo tidak ditemkuan.
 
-  /todos/insert:
-    post:
+    put:
       tags:
         - todo
       responses:
         '200':
-          description: status OK.
+          description: todo berhasil diperbarui.
           content:
             application/json:
              schema:
@@ -192,14 +205,13 @@ paths:
                   example: berenang
                 message:
                   type: string
-                  example: berhasil menambahkan Todo.
-  /todos/delete:
+                  example: berhasil memperbarui Todo.
     delete:
       tags:
         - todo
       responses:
         '200':
-          description: status OK.
+          description: todo berhasil dihapus.
           content:
             application/json:
              schema:
@@ -208,21 +220,8 @@ paths:
                 message::
                   type: string
                   example: berhasil mengahapus Todo.
-  /todos/update:
-    put:
-      tags:
-        - todo
-      responses:
-        '200':
-          description: status OK.
-          content:
-            application/json:
-             schema:
-              type: object
-              properties:
-                message::
-                  type: string
-                  example: berhasil memperbarui data
+
+    
 
   /todos/:id/complete:
     put:
@@ -261,7 +260,7 @@ paths:
         - project
       responses:
         '200':
-          description:  status OK.
+          description:  mendapatkan semua project.
           content:
             application/json:
              schema:
@@ -273,15 +272,12 @@ paths:
                 message::
                   type: string
                   example: menemukan semua project.
-                
-
-  /projects/:id:
-    get:
+    post:
       tags:
         - project
       responses:
         '200':
-          description:  status OK.
+          description:  menambahkan project.
           content:
             application/json:
              schema:
@@ -292,9 +288,24 @@ paths:
                   example: project dua
                 message:
                   type: string
-                  example: project ditemkuan.
+                  example: berhasil menambahkan project.
+  /projects/:id:
+    get:
+      tags:
+        - project
+      responses:
+        '200':
+          description: mendapatkan project berdasarkan id project.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                message::
+                  type: string
+                  example: berhasil menemukan id project.
         '400':
-          description:  bad request.
+          description:  id project yang dicari tidak ditemukan.
           content:
             application/json:
              schema:
@@ -303,29 +314,13 @@ paths:
                 message:
                   type: string
                   example: project tidak ditemkuan.
-
-  /projects/insert:
-    post:
-      tags:
-        - project
-      responses:
-        '200':
-          description: status OK.
-          content:
-            application/json:
-             schema:
-              type: object
-              properties:
-                message::
-                  type: string
-                  example: berhasil menambahkan project.
-  /projects/update:
+  
     put:
       tags:
         - project
       responses:
         '200':
-          description: status OK.
+          description: memperbarui project berdasarkan id project.
           content:
             application/json:
              schema:
@@ -334,13 +329,13 @@ paths:
                 message::
                   type: string
                   example: berhasil memperbarui project.
-  /projects/delete:
+  
     delete:
       tags:
         - project
       responses:
         '200':
-          description: status OK.
+          description: menghapus project berdasarkan project id.
           content:
             application/json:
              schema:
