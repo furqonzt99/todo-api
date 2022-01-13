@@ -34,13 +34,16 @@ http://localhost:8080/users/update
 http://localhost:8080/todos
 ```
 `GET`   fitur ini digunakan unutuk mengumpulkan semua todo yang telah ditambahkan.
+
 `POST`  fitur ini digunakan untuk menambahkan Todo.
 
 ```
 http://localhost:8080/todo/:id
 ```
 `GET`     digunakan untuk menampilkan data pada Todo.
+
 `PUT`     digukanan untuk mengedit Todo.
+
 `DELETE`  digunakan untuk menghapus Todo.
 
 ```
