@@ -28,3 +28,27 @@ http://localhost:8080/users/delete
 http://localhost:8080/users/update
 ```
 `PUT` fitur ini digukan untuk melakukan perubahan pada data user kita.
+
+# endpoint pada fitur ToDo :
+```
+http://localhost:8080/todos
+```
+`GET`   fitur ini digunakan unutuk mengumpulkan semua todo yang telah ditambahkan.
+`POST`  fitur ini digunakan untuk menambahkan Todo.
+
+```
+http://localhost:8080/todo/:id
+```
+`GET`     digunakan untuk menampilkan data pada Todo.
+`PUT`     digukanan untuk mengedit Todo.
+`DELETE`  digunakan untuk menghapus Todo.
+
+```
+http://localhost:8080/:id/complete
+```
+`POST`     endpoint yg digunakan untuk set status Todo sudah terselesaikan.
+
+```
+http://localhost:8080/:id/reopen
+```
+`POST`     endpoint yg digunakan untuk set status 'Reopen' Todo yang sudah terselesaikan.
