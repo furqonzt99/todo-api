@@ -67,9 +67,9 @@ http://localhost:8080/projects
 ```
 http://localhost:8080/projects/[:id]
 ```
-`GET`     digunakan untuk menampilkan data project dengan [[Lid]].
+`GET`     digunakan untuk menampilkan data project (masukan id project pada bagian [id]).
 
-`PUT`     digukanan untuk mengedit data project berdasarkan
+`PUT`     digukanan untuk mengedit data project (masukan id project pada bagian [id]).
 
-`DELETE`  digunakan untuk menghapus project(masukan id project pada bagian [[id]]).
+`DELETE`  digunakan untuk menghapus project (masukan id project pada bagian [id]).
 
