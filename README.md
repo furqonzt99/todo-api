@@ -11,6 +11,7 @@ http://localhost:8080/register
 `POST` Pada method ini kita bisa mendaftarkan akun untuk dapat mengakses fitur ToDo dan fitur Project.
 
 |contoh :|
+|--------|
 |"name" : "user1",|
 |"email" : "user1",|
 |"password" : "user1"|
