@@ -1,20 +1,20 @@
 package configs
 
 import (
+	"log"
+	"os"
 	"sync"
 
-	"github.com/labstack/gommon/log"
-
-	"github.com/spf13/viper"
+	"github.com/joho/godotenv"
 )
 
 type AppConfig struct {
-	Port     string `yaml:"port"`
+	Port string `yaml:"port"`
 	Database struct {
-		Driver   string `yaml:"driver"`
-		Name     string `yaml:"name"`
-		Host     string `yaml:"host"`
-		Port     string `yaml:"port"`
+		Driver string `yaml:"driver"`
+		Name string `yaml:"name"`
+		Host string `yaml:"host"`
+		Port string `yaml:"port"`
 		Username string `yaml:"username"`
 		Password string `yaml:"password"`
 	}
@@ -35,31 +35,20 @@ func GetConfig() *AppConfig {
 }
 
 func initConfig() *AppConfig {
-	var testConfig AppConfig
-	testConfig.Port = "1324"
-	testConfig.Database.Driver = "mysql"
-	testConfig.Database.Name = "todo_test_db"
-	testConfig.Database.Host = "db-be5.cdvldrjpkztm.ap-southeast-1.rds.amazonaws.com"
-	testConfig.Database.Port = "3306"
-	testConfig.Database.Username = "root"
-	testConfig.Database.Password = "root1234"
-
-	viper.SetConfigFile("yaml")
-	viper.SetConfigName("config")
-	viper.AddConfigPath("./configs/")
-
-	if err := viper.ReadInConfig(); err != nil {
-		log.Info("Please make a config file!")
-		return &testConfig
-	}
-
-	var finalConfig AppConfig
-
-	err := viper.Unmarshal(&finalConfig)
+	err := godotenv.Load()
 
 	if err != nil {
-		panic("Failed extract external config!")
+		log.Fatal("Error loading .env file")
 	}
 
-	return &finalConfig
+	var defaultConfig AppConfig
+	defaultConfig.Port = os.Getenv("APP_PORT")
+	defaultConfig.Database.Driver = os.Getenv("DB_DRIVER")
+	defaultConfig.Database.Name = os.Getenv("DB_NAME")
+	defaultConfig.Database.Host = os.Getenv("DB_HOST")
+	defaultConfig.Database.Port = os.Getenv("DB_PORT")
+	defaultConfig.Database.Username = os.Getenv("DB_USERNAME")
+	defaultConfig.Database.Password = os.Getenv("DB_PASSWORD")
+
+	return &defaultConfig
 }
