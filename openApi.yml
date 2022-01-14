@@ -1,0 +1,479 @@
+openapi: '3.0.2'
+info:
+  title: MiniProject ToDoApps
+  description: Dokumentasi miniProject ToDoApps
+  contact:
+    name: Team
+    email: gege@gmail.com
+  version: '1.0'
+servers:
+  - url: http://18.139.108.107:7000
+tags:
+    - name: user
+      description: API untuk login, register & mengakses data user
+    - name: todo
+      description: API untuk mengakses data todo
+    - name: project
+      description: API untuk mengakses data project
+paths:
+
+  /register:
+    post:
+      tags:
+        - user
+      # summary: ggwp
+      
+      responses:
+        '200':
+          description: status OK.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                name:
+                  type: string
+                  example: Asta
+                email:
+                  type: string
+                  example: Asta@gmail.com
+        '400':
+          description: bad request.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 400
+                message:
+                  type: string
+                  example: Email sudah terdaftar, coba dengan email yang berbeda.
+                    
+              
+  /login:
+    post:
+      tags:
+        - user
+      responses:
+        '200':
+          description: status OK.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                message::
+                  type: string
+                  example: suksen login
+                token:
+                  type: string
+                  example: )#%U#HJTPSJRSYHROE#(Y#)   
+        '400':
+          description: bad request.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 400
+                message:
+                  type: string
+                  example: password atau email salah.
+
+  /users/profile:
+    get:
+      tags:
+        - user
+      responses:
+        '200':
+          description: status OK.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                name::
+                  type: string
+                  example: asta
+                email:
+                  type: string
+                  example: asta@gmail.com
+                password:
+                  type: string
+                  example: '******'
+  /users/delete:
+    delete:
+      tags:
+        - user
+      responses:
+        '200':
+          description: status OK.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                message::
+                  type: string
+                  example: berhasil mengahapus data
+  /users/update:
+    put:
+      tags:
+        - user
+      responses:
+        '200':
+          description: status OK.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                message::
+                  type: string
+                  example: berhasil memperbarui data            
+  /todos:
+    get:
+      tags:
+        - todo
+      responses:
+        '200':
+          description: mendapatkan semua todo yang ada.
+          content:
+            application/json:
+             schema:
+              type: object
+              $ref: '#/components/schemas/gettodos'
+              
+              # properties:
+              #   data:
+              #     type: array
+              #     items: 
+              #       type: object
+              #       properties:
+              #         name: 
+              #           type: string
+              #           # example: mengerjakan tugas
+              #         message::
+              #           type: string
+              # example:
+              #   data:
+              #     - name: yogaw
+              #       message: haloo
+              #     - name: yogaw
+              #       message: haloo
+              #   messeges:
+              
+              # properties:
+              #   name: 
+              #     type: string
+              #     example: mengerjakan tugas
+              #   message::
+              #     type: string
+              #     example: Found ToDo
+    post:
+      tags:
+        - todo
+      responses:
+        '200':
+          description: todo berhasil ditambahkan.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                message::
+                  type: string
+                  example: berhasil menambahkan todo.
+        
+              
+  /todos/:id:
+    get:
+      tags:
+        - todo
+      responses:
+        '200':
+          description: mendapatkan todo berdasarkan todo id.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                name::
+                  type: string
+                  example: olahraga
+                message:
+                  type: string
+                  example: ToDo ditemukan.   
+        '400':
+          description: id todo yang dicari tidak ditemukan.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 400
+                message:
+                  type: string
+                  example: ToDo tidak ditemkuan.
+
+    put:
+      tags:
+        - todo
+      responses:
+        '200':
+          description: todo berhasil diperbarui.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                name::
+                  type: string
+                  example: berenang
+                message:
+                  type: string
+                  example: berhasil memperbarui Todo.
+    delete:
+      tags:
+        - todo
+      responses:
+        '200':
+          description: todo berhasil dihapus.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 400
+                message::
+                  type: string
+                  example: berhasil mengahapus Todo.
+
+    
+
+  /todos/:id/complete:
+    put:
+      tags:
+        - todo
+      responses:
+        '200':
+          description: status OK.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                message::
+                  type: string
+                  example: ToDo complete.
+  
+  /todos/:id/reopen:
+    put:
+      tags:
+        - todo
+      responses:
+        '200':
+          description: status OK.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                message::
+                  type: string
+                  example: ToDo reopen.
+  /projects:
+    get:
+      tags:
+        - project
+      responses:
+        '200':
+          description:  mendapatkan semua project.
+          content:
+            application/json:
+             schema:
+              type: object
+              $ref: '#/components/schemas/getprojects'
+              # properties:
+              #   name:
+              #     type: string
+              #     example: Project satu
+              #   message::
+              #     type: string
+              #     example: menemukan semua project.
+    post:
+      tags:
+        - project
+      responses:
+        '200':
+          description:  menambahkan project.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                name::
+                  type: string
+                  example: project dua
+                message:
+                  type: string
+                  example: berhasil menambahkan project.
+  /projects/:id:
+    get:
+      tags:
+        - project
+      responses:
+        '200':
+          description: mendapatkan project berdasarkan id project.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                message::
+                  type: string
+                  example: berhasil menemukan id project.
+        '400':
+          description:  id project yang dicari tidak ditemukan.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 400
+                message:
+                  type: string
+                  example: project tidak ditemkuan.
+  
+    put:
+      tags:
+        - project
+      responses:
+        '200':
+          description: memperbarui project berdasarkan id project.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                message::
+                  type: string
+                  example: berhasil memperbarui project.
+  
+    delete:
+      tags:
+        - project
+      responses:
+        '200':
+          description: menghapus project berdasarkan project id.
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                code: 
+                  type: integer
+                  example: 200
+                message::
+                  type: string
+                  example: berhasil mengahapus project.
+
+
+components:
+  schemas:
+    gettodos:
+      type: object
+      properties:
+        data:
+          type: array
+          items: 
+            type: object
+            properties:
+              name: 
+                type: string
+              message:
+                type: string
+      example:
+        data:
+          - code: 200 
+            message: success
+            data: Belajar
+          - code: 200
+            message: success
+            data: berenang
+        messeges: "semua todo ditemukan"
+
+  
+    getprojects:
+      type: object
+      properties:
+        data:
+          type: array
+          items: 
+            type: object
+            properties:
+              name: 
+                type: string
+              message:
+                type: string
+      example:
+        data:
+          - code: 200 
+            message: success
+            data: project dua
+          - code: 200
+            message: success
+            data: project tiga
+        messeges: "semua project ditemukan"
+
+  
+      
