@@ -3,11 +3,11 @@ info:
   title: MiniProject ToDoApps
   description: Dokumentasi miniProject ToDoApps
   contact:
-    name: Tim IndiHorn
+    name: Team
     email: gege@gmail.com
   version: '1.0'
 servers:
-  - url: http://localhost:8080
+  - url: http://18.139.108.107:7000
 tags:
     - name: user
       description: API untuk login, register & mengakses data user
