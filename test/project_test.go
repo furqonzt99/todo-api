@@ -18,6 +18,7 @@ import (
 	projectRepo "github.com/furqonzt99/todo-api/repository/project"
 	userRepo "github.com/furqonzt99/todo-api/repository/user"
 	"github.com/furqonzt99/todo-api/utils"
+	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/stretchr/testify/assert"
@@ -36,6 +37,8 @@ func TestMain(m *testing.M)  {
 	userContoller := userContoller.NewUserController(userRepo)
 	
 	e := echo.New()
+
+	e.Validator = &common.CustomValidator{Validator: validator.New()}
 
 	e.POST("/register", userContoller.Register)
 
@@ -68,10 +71,12 @@ func TestMain(m *testing.M)  {
 
 	json.Unmarshal(recLogin.Body.Bytes(), &response)
 
+	fmt.Println(response)
+
 	token = response.Data.(string)
 	
 	fmt.Println("TEST MAIN JALAN NIH")
-	
+
 	m.Run()
 
 }

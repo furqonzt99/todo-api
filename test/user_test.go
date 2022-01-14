@@ -15,6 +15,7 @@ import (
 	"github.com/furqonzt99/todo-api/delivery/middlewares"
 	userRepo "github.com/furqonzt99/todo-api/repository/user"
 	"github.com/furqonzt99/todo-api/utils"
+	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/stretchr/testify/assert"
@@ -32,6 +33,8 @@ func TestRegisterUser(t *testing.T)  {
 	userContoller := userContoller.NewUserController(userRepo)
 	
 	e := echo.New()
+
+	e.Validator = &common.CustomValidator{Validator: validator.New()}
 	
 	t.Run("Register Success 1", func(t *testing.T) {
 		e.POST("/register", userContoller.Register)
@@ -120,6 +123,8 @@ func TestLoginUser(t *testing.T)  {
 	userContoller := userContoller.NewUserController(userRepo)
 	
 	e := echo.New()
+
+	e.Validator = &common.CustomValidator{Validator: validator.New()}
 	
 	t.Run("Login Success", func(t *testing.T) {
 		e.POST("/login", userContoller.Login)
@@ -263,6 +268,8 @@ func TestUpdateUser(t *testing.T)  {
 	userContoller := userContoller.NewUserController(userRepo)
 	
 	e := echo.New()
+
+	e.Validator = &common.CustomValidator{Validator: validator.New()}
 	
 	t.Run("Update User Success", func(t *testing.T) {
 		e.PUT("/users/update", userContoller.Update, middleware.JWT([]byte(constants.JWT_SECRET_KEY)))

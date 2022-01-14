@@ -22,6 +22,10 @@ func (uc UserController) Register(c echo.Context) error {
 	var user models.User
 	c.Bind(&user)
 
+	if err := c.Validate(user); err != nil {
+      return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
+    }
+
 	hash, _ := middlewares.Hashpwd(user.Password)
 
 	user.Password = hash
@@ -37,6 +41,10 @@ func (uc UserController) Register(c echo.Context) error {
 func (uc UserController) Login(c echo.Context) error {
 	var login models.User
 	c.Bind(&login)
+
+	if err := c.Validate(login); err != nil {
+      return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
+    }
 
 	user, err := uc.Repo.GetLoginData(login.Email)
 	if err != nil {
@@ -96,6 +104,10 @@ func (uc UserController) Update(c echo.Context) error {
 	hash, _ := middlewares.Hashpwd(user.Password)
 
 	user.Password = hash
+
+	if err := c.Validate(user); err != nil {
+      return c.JSON(http.StatusBadRequest, common.ErrorResponse(http.StatusBadRequest, err.Error()))
+    }
 
 	userRes, err := uc.Repo.Update(user)
 	if err != nil {

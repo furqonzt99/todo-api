@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/furqonzt99/todo-api/configs"
+	"github.com/furqonzt99/todo-api/delivery/common"
 	projectContoller "github.com/furqonzt99/todo-api/delivery/controllers/project"
 	todoContoller "github.com/furqonzt99/todo-api/delivery/controllers/todo"
 	userContoller "github.com/furqonzt99/todo-api/delivery/controllers/user"
@@ -10,6 +11,7 @@ import (
 	todoRepo "github.com/furqonzt99/todo-api/repository/todo"
 	userRepo "github.com/furqonzt99/todo-api/repository/user"
 	"github.com/furqonzt99/todo-api/utils"
+	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
@@ -30,6 +32,8 @@ func main()  {
 	projectContoller := projectContoller.NewProjectController(projectRepo)
 
 	e := echo.New()
+
+	e.Validator = &common.CustomValidator{Validator: validator.New()}
 
 	routes.RegisterTodoPath(e, *todoContoller)
   	routes.RegisterUserPath(e, *userContoller)
