@@ -9,12 +9,12 @@ import (
 )
 
 type AppConfig struct {
-	Port string `yaml:"port"`
+	Port     string `yaml:"port"`
 	Database struct {
-		Driver string `yaml:"driver"`
-		Name string `yaml:"name"`
-		Host string `yaml:"host"`
-		Port string `yaml:"port"`
+		Driver   string `yaml:"driver"`
+		Name     string `yaml:"name"`
+		Host     string `yaml:"host"`
+		Port     string `yaml:"port"`
 		Username string `yaml:"username"`
 		Password string `yaml:"password"`
 	}

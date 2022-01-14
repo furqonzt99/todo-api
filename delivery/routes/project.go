@@ -7,14 +7,14 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func RegisterProjectPath(e *echo.Echo, pc controller.ProjectContoller)  {
+func RegisterProjectPath(e *echo.Echo, pc controller.ProjectContoller) {
 
 	auth := e.Group("")
 	auth.Use(middleware.JWT([]byte(constants.JWT_SECRET_KEY)))
-	
+
 	auth.GET("/projects", pc.GetAll)
-	auth.GET("/projects/:id", pc.Get)
 	auth.POST("/projects", pc.Insert)
+	auth.GET("/projects/:id", pc.Get)
 	auth.PUT("/projects/:id", pc.Edit)
 	auth.DELETE("/projects/:id", pc.Delete)
 }
