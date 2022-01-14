@@ -5,6 +5,7 @@ import (
 	projectContoller "github.com/furqonzt99/todo-api/delivery/controllers/project"
 	todoContoller "github.com/furqonzt99/todo-api/delivery/controllers/todo"
 	userContoller "github.com/furqonzt99/todo-api/delivery/controllers/user"
+	m "github.com/furqonzt99/todo-api/delivery/middlewares"
 	"github.com/furqonzt99/todo-api/delivery/routes"
 	projectRepo "github.com/furqonzt99/todo-api/repository/project"
 	todoRepo "github.com/furqonzt99/todo-api/repository/todo"
@@ -30,6 +31,8 @@ func main()  {
 	projectContoller := projectContoller.NewProjectController(projectRepo)
 
 	e := echo.New()
+
+	m.LogMiddleware(e)
 
 	routes.RegisterTodoPath(e, *todoContoller)
   	routes.RegisterUserPath(e, *userContoller)
